@@ -1,1 +1,75 @@
+INCLUDE Irvine32.inc
 
+.data
+msg1 BYTE "Enter side i: ", 0
+msg2 BYTE "Enter side j: ", 0
+msg3 BYTE "Enter side k: ", 0
+
+msg_eq  BYTE "Triangle is Equilateral", 0
+msg_iso BYTE "Triangle is Isosceles", 0
+msg_sca BYTE "Triangle is Scalene", 0
+
+i DWORD ?
+j DWORD ?
+k DWORD ?
+
+.code
+main PROC
+    mov edx, OFFSET msg1
+    call WriteString
+    call ReadInt
+    mov i, eax
+
+    mov edx, OFFSET msg2
+    call WriteString
+    call ReadInt
+    mov j, eax
+
+    mov edx, OFFSET msg3
+    call WriteString
+    call ReadInt
+    mov k, eax
+
+    call TriangleType
+
+    exit
+main ENDP
+
+TriangleType PROC
+    mov eax, i
+    mov ebx, j
+    mov ecx, k
+
+    cmp eax, ebx
+    jne check_isosceles
+    cmp eax, ecx
+    jne check_isosceles
+
+    mov edx, OFFSET msg_eq
+    call WriteString
+    call Crlf
+    ret
+
+check_isosceles:
+    cmp eax, ebx
+    je isosceles
+    cmp eax, ecx
+    je isosceles
+    cmp ebx, ecx
+    je isosceles
+
+
+    mov edx, OFFSET msg_sca
+    call WriteString
+    call Crlf
+    ret
+
+isosceles:
+    mov edx, OFFSET msg_iso
+    call WriteString
+    call Crlf
+    ret
+
+TriangleType ENDP
+
+END main
