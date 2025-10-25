@@ -1,1 +1,61 @@
+INCLUDE Irvine32.inc
+
+.data
+array1 DWORD 2,4,6,8,10
+array2 DWORD 5,7,9,11,13
+
+sum1 DWORD ?
+sum2 DWORD ?
+totalsum DWORD ?
+
+msg BYTE "The sum of both arrays combined is: ",0
+
+.code
+main PROC
+    call procedure3
+    call Crlf
+    exit
+main ENDP
+
+procedure1 PROC
+    mov ecx, LENGTHOF array1
+    mov esi, OFFSET array1
+    xor eax, eax        
+L1:
+    add eax, [esi]
+    add esi, TYPE array1
+    loop L1
+    mov sum1, eax     
+    ret
+procedure1 ENDP
+
+procedure2 PROC
+    mov ecx, LENGTHOF array2
+    mov esi, OFFSET array2
+    xor eax, eax
+L2:
+    add eax, [esi]
+    add esi, TYPE array2
+    loop L2
+    mov sum2, eax   
+    ret
+procedure2 ENDP
+
+procedure3 PROC
+    call procedure1
+    call procedure2
+
+    mov eax, sum1
+    add eax, sum2
+    mov totalsum, eax
+
+    mov edx, OFFSET msg
+    call WriteString
+    mov eax, totalsum
+    call WriteDec
+    call Crlf
+    ret
+procedure3 ENDP
+
+END main
 
