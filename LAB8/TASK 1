@@ -1,0 +1,42 @@
+TASK 1:
+INCLUDE Irvine32.inc
+
+.data
+orig    DWORD 11,22,33,44,55,66,77,88,99,110  
+newarr  DWORD 10 DUP(?)                        
+
+.code
+main PROC
+    mov ecx, LENGTHOF orig     
+    lea esi, orig              
+
+
+push_loop:
+    push DWORD PTR [esi]        
+    add esi, TYPE orig          
+    loop push_loop
+
+    mov ecx, LENGTHOF newarr
+    lea edi, newarr            
+
+pop_loop:
+    pop DWORD PTR [edi]      
+    add edi, TYPE newarr     
+    loop pop_loop
+
+    mov ecx, LENGTHOF newarr
+    lea esi, newarr
+
+display_loop:
+    mov eax, [esi]
+    call WriteDec              
+    call Crlf
+    add esi, TYPE newarr
+    loop display_loop
+
+    exit
+main ENDP
+END main
+
+
+
