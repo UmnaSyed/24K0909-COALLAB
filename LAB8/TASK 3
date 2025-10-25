@@ -12,12 +12,12 @@ msg BYTE "The sum of both arrays combined is: ",0
 
 .code
 main PROC
-    call procedure3
+    call p3
     call Crlf
     exit
 main ENDP
 
-procedure1 PROC
+p1 PROC
     mov ecx, LENGTHOF array1
     mov esi, OFFSET array1
     xor eax, eax        
@@ -27,9 +27,9 @@ L1:
     loop L1
     mov sum1, eax     
     ret
-procedure1 ENDP
+p1 ENDP
 
-procedure2 PROC
+p2 PROC
     mov ecx, LENGTHOF array2
     mov esi, OFFSET array2
     xor eax, eax
@@ -39,11 +39,11 @@ L2:
     loop L2
     mov sum2, eax   
     ret
-procedure2 ENDP
+p2 ENDP
 
-procedure3 PROC
-    call procedure1
-    call procedure2
+p3 PROC
+    call p1
+    call p2
 
     mov eax, sum1
     add eax, sum2
@@ -55,7 +55,7 @@ procedure3 PROC
     call WriteDec
     call Crlf
     ret
-procedure3 ENDP
+p3 ENDP
 
 END main
 
